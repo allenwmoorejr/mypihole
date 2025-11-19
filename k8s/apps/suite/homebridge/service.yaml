@@ -14,7 +14,7 @@ spec:
       port: 8581
       targetPort: 8581
       protocol: TCP
-    - name: secure
+    - name: tls
       port: 51443
       targetPort: 51443
       protocol: TCP
