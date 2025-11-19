@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: scrypted
+  namespace: suite
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.middlewares: suite-redirect-https@kubernetescrd
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: scrypted.suite.home.arpa
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: scrypted
+                port:
+                  number: 11080
+  tls:
+    - hosts:
+        - scrypted.suite.home.arpa
+      secretName: suite-home-arpa-tls

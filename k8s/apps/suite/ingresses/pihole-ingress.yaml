@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pihole-ui
+  namespace: suite
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.middlewares: suite-allow-lan@kubernetescrd,suite-security-headers@kubernetescrd,suite-compress@kubernetescrd
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: pihole.suite.home.arpa
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: pihole
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - pihole.suite.home.arpa
+      secretName: suite-home-arpa-tls

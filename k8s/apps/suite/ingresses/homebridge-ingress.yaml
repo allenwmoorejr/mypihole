@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: homebridge-traefik
+  namespace: suite
+  labels:
+    app: homebridge
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/service.serversscheme: "http"
+    traefik.ingress.kubernetes.io/router.priority: "100"
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: homebridge.suite.home.arpa
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: homebridge
+                port:
+                  name: ui
+  tls:
+    - hosts:
+        - homebridge.suite.home.arpa
+      secretName: suite-home-arpa-tls
