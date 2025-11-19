@@ -1,0 +1,22 @@
+# k8s/apps/suite/homebridge/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: homebridge
+  namespace: suite
+  labels:
+    app: homebridge
+spec:
+  type: ClusterIP
+  selector:
+    app: homebridge
+  ports:
+    - name: ui
+      port: 8581
+      targetPort: 8581
+      protocol: TCP
+    - name: secure
+      port: 51443
+      targetPort: 51443
+      protocol: TCP
+
