@@ -1,0 +1,15 @@
+apiVersion: v1
+data:
+  01-ui-host.conf: |
+    # Force UI hostname to Traefik Ingress VIP (loads before 02-*)
+    address=/pihole.suite.home.arpa/192.168.50.242
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"01-ui-host.conf":"# Force UI hostname to Traefik Ingress VIP (loads before 02-*)\naddress=/pihole.suite.home.arpa/192.168.50.242\n"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"pihole-ui-override","namespace":"suite"}}
+  creationTimestamp: "2025-09-12T12:53:25Z"
+  name: pihole-ui-override
+  namespace: suite
+  resourceVersion: "7538282"
+  uid: 3e3aa229-aef8-475c-ac03-17ec34e6dd1f

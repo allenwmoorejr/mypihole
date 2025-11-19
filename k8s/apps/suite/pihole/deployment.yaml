@@ -1,0 +1,122 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "30"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"pihole","namespace":"suite"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"pihole"}},"strategy":{"type":"Recreate"},"template":{"metadata":{"labels":{"app":"pihole"}},"spec":{"containers":[{"env":[{"name":"DNSMASQ_LISTENING","value":"all"},{"name":"ServerIP","value":"192.168.50.245"},{"name":"WEB_PORT","value":"80"},{"name":"PIHOLE_DNS_1","value":"1.1.1.1"},{"name":"PIHOLE_DNS_2","value":"9.9.9.9"},{"name":"DNSSEC","value":"false"},{"name":"TZ","value":"America/Chicago"}],"image":"pihole/pihole:latest","name":"pihole","ports":[{"containerPort":53,"name":"dns-udp","protocol":"UDP"},{"containerPort":53,"name":"dns-tcp","protocol":"TCP"},{"containerPort":80,"name":"http"}],"volumeMounts":[{"mountPath":"/etc/dnsmasq.d","name":"etc-dnsmasq"},{"mountPath":"/etc/dnsmasq.d/01-ui-host.conf","name":"ui-override","subPath":"01-ui-host.conf"},{"mountPath":"/etc/dnsmasq.d/02-suite-home-arpa.conf","name":"dnsmasq-cm","subPath":"02-suite-home-arpa.conf"},{"mountPath":"/etc/dnsmasq.d/03-custom.conf","name":"dnsmasq-custom","subPath":"03-custom.conf"},{"mountPath":"/etc/pihole","name":"etc-pihole"}]}],"nodeSelector":{"kubernetes.io/arch":"arm64","kubernetes.io/hostname":"m2"},"volumes":[{"name":"etc-pihole","persistentVolumeClaim":{"claimName":"pihole-etc-pihole-pvc"}},{"name":"etc-dnsmasq","persistentVolumeClaim":{"claimName":"pihole-dnsmasq-pvc"}},{"configMap":{"name":"pihole-dnsmasq"},"name":"dnsmasq-cm"},{"configMap":{"name":"pihole-ui-override"},"name":"ui-override"},{"configMap":{"name":"pihole-dnsmasq-custom"},"name":"dnsmasq-custom"}]}}}}
+  creationTimestamp: "2025-09-12T12:53:26Z"
+  generation: 40
+  name: pihole
+  namespace: suite
+  resourceVersion: "37681377"
+  uid: c641337e-588b-4870-97a6-eefb0f7cc2d3
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: pihole
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/restartedAt: "2025-11-15T09:02:01-06:00"
+      creationTimestamp: null
+      labels:
+        app: pihole
+    spec:
+      containers:
+      - env:
+        - name: DNSMASQ_LISTENING
+          value: all
+        - name: ServerIP
+          value: 192.168.50.245
+        - name: WEB_PORT
+          value: "80"
+        - name: PIHOLE_DNS_1
+          value: 1.1.1.1
+        - name: PIHOLE_DNS_2
+          value: 9.9.9.9
+        - name: DNSSEC
+          value: "false"
+        - name: TZ
+          value: America/Chicago
+        image: pihole/pihole:latest
+        imagePullPolicy: Always
+        name: pihole
+        ports:
+        - containerPort: 53
+          name: dns-udp
+          protocol: UDP
+        - containerPort: 53
+          name: dns-tcp
+          protocol: TCP
+        - containerPort: 80
+          name: http
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /etc/dnsmasq.d
+          name: etc-dnsmasq
+        - mountPath: /etc/dnsmasq.d/01-ui-host.conf
+          name: ui-override
+          subPath: 01-ui-host.conf
+        - mountPath: /etc/dnsmasq.d/02-suite-home-arpa.conf
+          name: dnsmasq-cm
+          subPath: 02-suite-home-arpa.conf
+        - mountPath: /etc/dnsmasq.d/03-custom.conf
+          name: dnsmasq-custom
+          subPath: 03-custom.conf
+        - mountPath: /etc/pihole
+          name: etc-pihole
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        kubernetes.io/arch: arm64
+        kubernetes.io/hostname: m2
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: etc-pihole
+        persistentVolumeClaim:
+          claimName: pihole-etc-pihole-pvc-longhorn
+      - name: etc-dnsmasq
+        persistentVolumeClaim:
+          claimName: pihole-dnsmasq-pvc-longhorn
+      - configMap:
+          defaultMode: 420
+          name: pihole-dnsmasq
+        name: dnsmasq-cm
+      - configMap:
+          defaultMode: 420
+          name: pihole-ui-override
+        name: ui-override
+      - configMap:
+          defaultMode: 420
+          name: pihole-dnsmasq-custom
+        name: dnsmasq-custom
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2025-11-11T15:55:35Z"
+    lastUpdateTime: "2025-11-15T15:02:19Z"
+    message: ReplicaSet "pihole-dd4df85d" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  - lastTransitionTime: "2025-11-18T03:26:33Z"
+    lastUpdateTime: "2025-11-18T03:26:33Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  observedGeneration: 40
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

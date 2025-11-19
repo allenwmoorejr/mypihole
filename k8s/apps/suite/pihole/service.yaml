@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"pihole","namespace":"suite"},"spec":{"externalTrafficPolicy":"Local","loadBalancerIP":"192.168.50.245","ports":[{"name":"dns-udp","nodePort":31173,"port":53,"protocol":"UDP","targetPort":53},{"name":"dns-tcp","nodePort":31173,"port":53,"protocol":"TCP","targetPort":53},{"name":"http","port":80,"targetPort":80}],"selector":{"app":"pihole"},"type":"LoadBalancer"}}
+  creationTimestamp: "2025-09-12T12:53:26Z"
+  finalizers:
+  - service.kubernetes.io/load-balancer-cleanup
+  name: pihole
+  namespace: suite
+  resourceVersion: "38141993"
+  uid: dc1b1f61-c173-4187-a5c5-60ade3c33c4f
+spec:
+  allocateLoadBalancerNodePorts: true
+  clusterIP: 10.43.157.234
+  clusterIPs:
+  - 10.43.157.234
+  externalTrafficPolicy: Local
+  healthCheckNodePort: 32749
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  loadBalancerIP: 192.168.50.245
+  ports:
+  - name: dns-udp
+    nodePort: 31173
+    port: 53
+    protocol: UDP
+    targetPort: 53
+  - name: dns-tcp
+    nodePort: 32643
+    port: 53
+    protocol: TCP
+    targetPort: 53
+  - name: http
+    nodePort: 31961
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: pihole
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer:
+    ingress:
+    - ip: 192.168.50.245
+      ipMode: VIP

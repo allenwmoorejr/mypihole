@@ -1,0 +1,18 @@
+apiVersion: v1
+data:
+  03-custom.conf: |
+    address=/suite.home.arpa/192.168.50.242
+    host-record=mirror.suite.home.arpa,192.168.50.242
+    host-record=homebridge.suite.home.arpa,192.168.50.242
+    host-record=scrypted.suite.home.arpa,192.168.50.242
+    host-record=pi.hole,192.168.50.245
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"03-custom.conf":"address=/suite.home.arpa/192.168.50.242\nhost-record=mirror.suite.home.arpa,192.168.50.242\nhost-record=homebridge.suite.home.arpa,192.168.50.242\nhost-record=scrypted.suite.home.arpa,192.168.50.242\nhost-record=pi.hole,192.168.50.245\n"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"pihole-dnsmasq-custom","namespace":"suite"}}
+  creationTimestamp: "2025-09-12T12:53:25Z"
+  name: pihole-dnsmasq-custom
+  namespace: suite
+  resourceVersion: "19077292"
+  uid: e18a372d-35e6-4dfd-9e99-00ee00875e8c
