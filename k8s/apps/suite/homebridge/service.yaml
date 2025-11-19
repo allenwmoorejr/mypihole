@@ -1,4 +1,3 @@
-# k8s/apps/suite/homebridge/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -19,4 +18,3 @@ spec:
       port: 51443
       targetPort: 51443
       protocol: TCP
-
