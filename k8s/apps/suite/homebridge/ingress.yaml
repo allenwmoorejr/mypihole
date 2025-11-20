@@ -23,7 +23,7 @@ spec:
               service:
                 name: homebridge
                 port:
-                  number: 8581
+                  name: ui
   tls:
     - hosts:
       - homebridge.suite.home.arpa
